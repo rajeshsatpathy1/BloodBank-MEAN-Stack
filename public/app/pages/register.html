@@ -15,10 +15,15 @@
 
 <br>
 
-<div class = "row show-hide-message">
+<div class="jumbotron text-center"  ng-show="register.loading"><!--big box for calling extra attention to some special content LOADING in this case-->
+    <span class = "glyphicon glyphicon-repeat fast-right-spinner"></span>
+    <p>Loading...</p>
+</div>
+
+<div class = "row show-hide-message" ng-show="register.successMsg">
     <div class = "alert alert-success">{{ register.successMsg }}</div>  
 </div>
 
-<div class = "row show-hide-message">
+<div class = "row show-hide-message" ng-show="register.errMsg">
     <div class = "alert alert-danger">{{ register.errMsg }}</div>
 </div>

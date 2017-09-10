@@ -1,20 +1,31 @@
-angular.module('userControllers', [])
+angular.module('userControllers', ['userServices'])
 
-.controller('regCtrl', function($http){
+.controller('regCtrl', function($http, $location, $timeout, User){
     var app = this;
 
     this.regUser = function(regData){
-        console.log('Form submitted');
-        console.log(this.regData);
-        $http.post('/users', this.regData).then(function(data){
-            console.log(data.data.success);
-            console.log(data.data.message);
+        app.errMsg = false;
+        app.successMsg = false;
+        app.loading = true;
+        //console.log('Form submitted');
+        //console.log(this.regData);
+        User.create(app.regData).then(function(data){   //To help in using user creation factory whenever required - defined in userServices
+            //console.log(data.data.success);
+            //console.log(data.data.message);
 
             if(data.data.success){
-                app.successMsg = data.data.message;
-            }else{
+                app.successMsg = data.data.message + '\n ReDiReCtInG...';
+                app.loading = false;
+                $timeout(function(){
+                    $location.path('/');
+                },1000);
+                }else{
                 app.errMsg = data.data.message;
+                app.loading = false;
             }
         });
     };
 });
+
+//location - specifies path
+//timeout - takes a function and delay time as parameters
