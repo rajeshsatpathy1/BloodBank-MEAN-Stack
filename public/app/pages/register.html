@@ -1,0 +1,24 @@
+<div class = "page-header">
+    <h1>Hello from Register route</h1>
+</div>
+
+<form ng-submit="register.regUser(regData);">
+    <label>Username:</label>
+    <input class = "form-control" type = "text" name = "username" placeholder="Please enter your username" ng-model="register.regData.username"><br>
+    <label>Password:</label>
+    <input class = "form-control" type = "password" name = "password" placeholder="Please enter your password" ng-model="register.regData.password"><br>
+    <label>Email:</label>
+    <input class = "form-control" type = "text" name = "email" placeholder="Please enter your email address" ng-model="register.regData.email"><br>
+
+    <button class="btn btn-primary" type="submit">Register</button>
+</form>
+
+<br>
+
+<div class = "row show-hide-message">
+    <div class = "alert alert-success">{{ register.successMsg }}</div>  
+</div>
+
+<div class = "row show-hide-message">
+    <div class = "alert alert-danger">{{ register.errMsg }}</div>
+</div>
