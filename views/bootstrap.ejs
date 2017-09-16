@@ -14,6 +14,7 @@
     <!--Hand-picked css files-->
     <link href="assets/cs/spinner.css" rel="stylesheet">
     <link href="assets/cs/glyph.css" rel="stylesheet">
+    <link href="assets/cs/style.css" rel="stylesheet">
 
     <!--Animation CSS files-->
     <link href="assets/cs/animate.css" rel="stylesheet">
@@ -21,15 +22,20 @@
     <!--Angular core js -->
     <script src = "assets/js/angular.js"> </script>
     <script src = "assets/js/angular-route.js"> </script>
+    <script src = "assets/js/angular-animate.js"> </script>
+
+    <!--Custom made js-->
     <script src = "app/app.js"> </script>
     <script src = "app/routes.js"> </script>
     <script src = "app/controllers/userCtrl.js"> </script>
+    <script src = "app/controllers/mainCtrl.js"> </script>
     <script src = "services/userServices.js"> </script>
-    <script src = "assets/js/angular-animate.js"> </script>
+    <script src = "services/authServices.js"> </script>
+
 
   </head>
 
-  <body ng-app="userApp">
+  <body ng-app="userApp" ng-controller="mainCtrl as main">
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
       <a class="navbar-brand" href="#">Top navbar</a>
@@ -42,7 +48,7 @@
             <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/about">About</a>
+            <a class="nav-link" href="/login">Login</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/register">Register</a>

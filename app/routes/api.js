@@ -10,7 +10,7 @@ module.exports = function(router){
             "password": req.body.password,
             "email": req.body.email
         });
-        console.log("thois is " + req.body.username);
+        console.log("this is the" + req.body.username);
         user.save(function(err){
             if(err) throw err; 
             console.log("person saved");

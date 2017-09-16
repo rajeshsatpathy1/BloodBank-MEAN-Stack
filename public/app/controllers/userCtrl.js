@@ -18,7 +18,7 @@ angular.module('userControllers', ['userServices'])
                 app.loading = false;
                 $timeout(function(){
                     $location.path('/');
-                },1000);
+                },2000);
                 }else{
                 app.errMsg = data.data.message;
                 app.loading = false;
