@@ -4,9 +4,12 @@ var morgan      = require('morgan');
 var mongoose    = require('mongoose');
 var User        = require('./app/models/user');
 var PORT        = process.env.port || 8080;
-var bodyParser = require('body-parser');
+var bodyParser  = require('body-parser');
+var jwt         = require('jsonwebtoken');
 
-app.use(morgan('dev'));
+var secret      = 'NCrypTed'; 
+
+//app.use(morgan('dev'));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -64,11 +67,39 @@ app.post('/authenticate',jsonParser, function(req, res){
                     res.json({ success: false, message: '!Password mismatch to the username given!'});
                 }
                 else{
-                    res.json({success: true, message: 'User Authenticated.'});
+                    token = jwt.sign({
+                        username: user.userName, email: user.email
+                    }, secret, {expiresIn: '24h'});
+                    res.json({success: true, message: 'User Authenticated!', token: token});
             }
         }
         }
     });
+});
+
+// Middleware for Routes that checks for token - Place all routes after this route that require the user to already be logged in
+app.use(function(req, res, next) {
+console.log(req.headers['x-access-token']);
+var token = req.body.token || req.body.query || req.headers['x-access-token'];
+// Check if token is valid and not expired  
+if (token) {
+    // Function to verify token
+    jwt.verify(token, secret, function(err, decoded) {
+        if (err) {
+            res.json({ success: false, message: 'Token invalid' }); // Token has expired or is invalid
+        } else {
+            req.decoded = decoded; // Assign to req. variable to be able to use it in next() route ('/me' route)
+            next(); // Required to leave middleware
+        }
+    });
+} else {
+    res.json({ success: false, message: 'No token provided' }); // Return error if no token was provided in the request
+}
+});
+
+// Route to get the currently logged in user    
+app.post('/me', function(req, res) {
+    res.send(req.decoded); // Return the token acquired from middleware
 });
 
 app.listen(PORT,function(){

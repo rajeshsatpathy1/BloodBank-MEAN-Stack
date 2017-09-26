@@ -18,10 +18,15 @@ angular.module('appRoutes', ['ngRoute'])
     })
 
     .when('/login', {
-        templateUrl: 'app/pages/login.html',
+        templateUrl: 'app/pages/login.html'
         //controller: 'mainCtrl',
         //controllerAs: 'main'
     })
+
+    .when('/logout',{
+        templateUrl: 'app/pages/logout.html'
+    })
+    
     .otherwise({redirectTo: '/'});
 
 
