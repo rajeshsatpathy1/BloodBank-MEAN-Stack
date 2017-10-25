@@ -1,13 +1,25 @@
 angular.module('mainController', ['authServices'])
 
-.controller('mainCtrl', function(Auth, $location, $timeout){
+.controller('mainCtrl', function(Auth, $location, $timeout, $rootScope){
     var app = this;
-    
-    if(Auth.isLoggedIn()){
-        console.log("Succcess: User has logged in");    
-    }else{
-        console.log("Failiure");
-    }
+
+    //Every time there is change in the route check it out
+    $rootScope.$on('$routeChangeStart',function(){
+        if(Auth.isLoggedIn()){
+            app.isLoggedIn = true;
+            console.log("Succcess: User has logged in");    
+            Auth.getUser().then(function(data){
+                //console.log(data.data.username);
+                app.username = data.data.username; // To access username from frontend
+                app.email = data.data.email;
+            });
+        }else{
+            app.isLoggedIn = false;
+            console.log("Failure: User is not logged in");
+            app.username = "";
+            app.email = "";
+        }
+    });
 
     this.doLogin = function(loginData){
         app.errMsg = false;
@@ -24,6 +36,8 @@ angular.module('mainController', ['authServices'])
                 app.loading = false;
                 $timeout(function(){
                     $location.path('/about');   //It was redirected to home in register
+                    app.loginData = '';
+                    app.successMsg = false;
                 },2000);
                 }else{
                 app.errMsg = data.data.message;

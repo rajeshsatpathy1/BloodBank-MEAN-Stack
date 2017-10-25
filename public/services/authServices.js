@@ -6,12 +6,20 @@ angular.module('authServices', [])
     //Auth.login(loginData);
     authFactory.login = function(loginData){
         return $http.post('/authenticate',loginData).then(function(data){
-            console.log(data.data.token);
+            //console.log(data.data.token); Check out the token if you want to paste it for postman
             AuthToken.setToken(data.data.token);
             return data;
         });
     }
 
+    //Auth.getUser()
+    authFactory.getUser = function(){
+        if(AuthToken.getToken()){
+            return $http.post('/me');
+        }else{
+            $q.reject({message: 'User has no token'});
+        }
+    }
     //Auth.logout();
     authFactory.logout = function(){
         AuthToken.setToken();
@@ -47,4 +55,18 @@ angular.module('authServices', [])
     };
 
     return authTokenFactory;
+})
+
+//To handle tokens for every request made
+.factory('AuthInterceptors', function(AuthToken){
+    var authInterceptorsFactory = {};
+
+    authInterceptorsFactory.request = function(config){
+        var token = AuthToken.getToken();
+
+        if(token) config.headers['x-access-token'] = token;
+        return config;
+    }
+
+    return authInterceptorsFactory;
 });

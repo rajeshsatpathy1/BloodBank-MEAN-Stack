@@ -1,3 +1,4 @@
+/**Not using this one */
 var User        = require('../models/user');
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
