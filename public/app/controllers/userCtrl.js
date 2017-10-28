@@ -31,7 +31,46 @@ angular.module('userControllers', ['userServices'])
             app.loading = false;
         }
     };
+
+    //checkUsername(regData);
+    this.checkUsername = function(regData){
+        app.checkingUsername = true;
+        app.usernameMessage = false;
+        app.usernameInvalid = false;
+
+        User.checkUsername(app.regData).then(function(data){
+            if(data.data.success){
+                app.usernameMessage = data.data.message;    //to set and send data to frontend 
+                app.checkingUsername = false;               //As the username has been checked
+                app.usernameInvalid = false;
+            }else{
+                app.usernameMessage = data.data.message;    //to set and send data to frontend 
+                app.checkingUsername = false;               //As the username has been checked
+                app.usernameInvalid = true;
+            }
+        });
+    };
+    
+    this.checkEmail = function(regData){
+        app.checkingEmail = true;
+        app.emailMessage = false;
+        app.emailInvalid = false;
+
+        User.checkEmail(app.regData).then(function(data){
+            if(data.data.success){
+                app.emailMessage = data.data.message;    //to set and send data to frontend 
+                app.checkingEmail = false;               //As the username has been checked
+                app.emailInvalid = false;
+            }else{
+                app.emailMessage = data.data.message;    //to set and send data to frontend 
+                app.checkingEmail = false;               //As the username has been checked
+                app.emailInvalid = true;
+            }
+        });
+    };
 });
+
+
 
 //location - specifies path
 //timeout - takes a function and delay time as parameters

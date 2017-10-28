@@ -1,6 +1,6 @@
-angular.module('mainController', ['authServices'])
+angular.module('mainController', ['authServices', 'userServices'])
 
-.controller('mainCtrl', function(Auth, $location, $timeout, $rootScope){
+.controller('mainCtrl', function(Auth, $location, $timeout, $rootScope, User){
     var app = this;
 
     //Every time there is change in the route check it out
@@ -12,6 +12,15 @@ angular.module('mainController', ['authServices'])
                 //console.log(data.data.username);
                 app.username = data.data.username; // To access username from frontend
                 app.email = data.data.email;
+
+                User.getPermission().then(function(data){
+                    if(data.data.permission === 'admin' || data.data.permission === 'moderator'){
+                        app.authorized = true;
+                    }else{
+                        app.authorized = false;
+                    }
+                })
+
             });
         }else{
             app.isLoggedIn = false;

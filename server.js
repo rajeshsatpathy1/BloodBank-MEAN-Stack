@@ -11,7 +11,7 @@ var social      = require('./public/app/passport/passport')(app, passport);
 
 var secret      = 'NCrypTed';   //Secret for JSON web token
 
-//app.use(morgan('dev'));
+app.use(morgan('dev'));
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var jsonParser = bodyParser.json();
 app.set('view engine', 'ejs');
@@ -76,22 +76,30 @@ app.post('/users',jsonParser,function(req,res){ //Posted through public/pages/re
     }
 });
 
-app.post('/checkusername', jsonParser, function(req, res){
-    User.findOne({username: req.body.username }).select('username').exec(function(req, res){
+app.post('/checkusername',jsonParser, function(req, res){    //on public/pages/register.html controlled by userCtrl.js
+    User.findOne({ userName: req.body.username }).select('username').exec(function(err, user){
+        if(err)  console.log(err);
+        //console.log('This is  ' + req.body.username + ' with password: ' + req.body.password); //Check for working condition
+        //console.log(user);
         if(user){
-            res.json({success: false, message: 'That username is already taken'});
+            res.json({success: false, message: 'Username is already used'});
         }else{
-            res.json({success: true, message: 'Valid username'});
+            res.json({success: true, message: 'Username is valid'});
+            
         }
     });
 });
 
-app.post('/checkemail', jsonParser, function(req, res){
-    User.findOne({email: req.body.email }).select('email').exec(function(req, res){
+app.post('/checkemail',jsonParser, function(req, res){    //on public/pages/register.html controlled by userCtrl.js
+    User.findOne({ email: req.body.email }).select('email').exec(function(err, user){
+        if(err)  console.log(err);
+        //console.log('This is  ' + req.body.username + ' with password: ' + req.body.password); //Check for working condition
+        //console.log(user);
         if(user){
-            res.json({success: false, message: 'Somebody is already using that email address'});
+            res.json({success: false, message: 'Email id is already used'});
         }else{
-            res.json({success: true, message: 'Valid email'});
+            res.json({success: true, message: 'Email id is valid'});
+            
         }
     });
 });
@@ -100,6 +108,7 @@ app.post('/authenticate',jsonParser, function(req, res){    //on public/pages/lo
     User.findOne({ userName: req.body.username }).select('email username password').exec(function(err, user){
         if(err)  console.log(err);
         //console.log('This is  ' + req.body.username + ' with password: ' + req.body.password); //Check for working condition
+        //console.log(user.email);
         if(!user){
             res.json({success: false, message: 'Could not authenticate user'});
         }else if(user){
@@ -124,7 +133,7 @@ app.post('/authenticate',jsonParser, function(req, res){    //on public/pages/lo
 
 // Middleware for Routes that checks for token - Place all routes after this route that require the user to already be logged in
 app.use(jsonParser, function(req, res, next) {
-console.log(req.headers['x-access-token']);
+//console.log(req.headers['x-access-token']);
 var token = req.body.token || req.body.query || req.headers['x-access-token'];
 // Check if token is valid and not expired  
 if (token) {
@@ -145,6 +154,63 @@ if (token) {
 // Route to get the currently logged in user    
 app.post('/me', function(req, res) {    //Post to check if token has saved the right thing - Use Postman(REST api)
     res.send(req.decoded); // Return the token acquired from middleware
+});
+
+// Route to get the current user's permission level
+app.post('/permission', function(req, res) {
+    //console.log(req.decoded.username);
+    User.findOne({ userName: req.decoded.username }, function(err, user) {
+            // Check if username was found in database
+            if (!user) {
+                res.json({ success: false, message: 'No user was found' }); // Return an error
+            } else {
+                res.json({ success: true, permission: user.permission }); // Return the user's permission
+            }
+    });
+});
+
+app.post('/management1', function(req, res){
+    User.find({}, function(err, users){
+        if(err) throw err;
+
+        User.findOne({ userName: req.decoded.username }, function(err, mainUser){
+            if(err) throw err;
+            if(!mainUser){
+                res.json({ success: false, message: "No main user found"}); //Just for security purposes
+            }else{
+                if(mainUser.permission === 'admin' || mainUser.permission === 'moderator'){
+                    if(!users){
+                        res.json({ success:false, message: "No users found" });
+                    }else{
+                        res.json({ success: true, users: users, permission: mainUser.permission});
+                    }
+                }else{
+                    res.json({ success: false, message: "Insufficient permissions"});
+                }
+            }
+        })
+    });
+});
+
+app.delete('/management/:username',function(req,res){
+    var deletedUsername = req.params.username;
+    console.log(deletedUsername);
+    User.findOne({ userName: req.decoded.username }, function(err, mainUser){
+        if(err) throw err;
+        if(!mainUser){
+            res.json({ success: false, message: "no user found"}); // Just for confirmation
+        }else{
+            if(mainUser.permission !== "admin"){
+                res.json({ success: false, message: "access permissions insufficient"});
+            }else{
+                User.findOneAndRemove({ userName: deletedUsername }, function(err, user){
+                    if(err) throw err;
+                    res.json({ success: true });
+                });
+            }
+        }
+
+    });
 });
 
 app.listen(PORT,function(){

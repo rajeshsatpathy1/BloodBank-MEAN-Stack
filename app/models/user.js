@@ -55,7 +55,8 @@ var UserSchema = new Schema({
     name: {type: String, required: true, validate: nameValidator},
     userName: {type: String,lowercase: true,required: true,unique: true, validate: usernameValidator}, //The n in name is capital -- BEWARE!!
     password: {type: String,required: true, validate: passwordValidator},
-    email: {type: String,lowercase: true,required: true,unique: true, validate: emailValidator}
+    email: {type: String,lowercase: true,required: true,unique: true, validate: emailValidator},
+    permission: {type:String, required: true, default: 'user'}
 });
 
 UserSchema.pre('save', function(next) {
