@@ -1,6 +1,6 @@
 angular.module('managementController', [])
 
-.controller('managementCtrl', function(User){
+.controller('managementCtrl', function(User, $scope){
     var app = this;
     app.loading = true;
     app.accessDenied = true;
@@ -64,8 +64,33 @@ angular.module('managementController', [])
             }
         });
     }
+    
+    app.search = function(searchKeyword, number){
+        if(searchKeyword){
+            if(searchKeyword.length > 0){
+                app.limitto = 0;
+                $scope.searchFilter = searchKeyword;
+                app.limitto = number;
+            }else{
+                $scope.searchFilter = undefined;
+                app.limitto = 0;
+            }
+        }else{
+            $scope.searchFilter = undefined;
+            app.limitto = 0;
+        }
+    }
+
+    app.clear = function(){
+        $scope.number = 'clear';
+        app.limitto = 0;
+        $scope.searchKeyword = undefined;
+        $scope.searchFilter = undefined;
+        app.showMoreError = false;
+    }
 })
 
-.controller('editCtrl', function(){
+// Controller: Used to edit users
+.controller('editCtrl', function() {
 
 });

@@ -1,22 +1,49 @@
-/**Not using this one */
-var User        = require('../models/user');
-var bodyParser = require('body-parser');
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
+var User = require('../models/user');
 
+module.exports = function (router) {
+    router.post('/users', function (req, res) {
+        var user = new User();
+        user.username = req.body.username;
+        user.name = req.body.name;
+        user.password = req.body.password;
+        user.email = req.body.email;
 
-module.exports = function(router){
-    router.post('/users',urlencodedParser,function(req,res){
-        var user = new User({
-            "userName": req.body.username,
-            "password": req.body.password,
-            "email": req.body.email
-        });
-        console.log("this is the" + req.body.username);
-        user.save(function(err){
-            if(err) throw err; 
-            console.log("person saved");
-        });
-        res.send("User saved");
+        user.age = req.body.age;
+        user.gender = req.body.gender;
+        user.bloodGroup = req.body.bloodGroup;
+        user.weight = req.body.weight;
+
+        user.resPhoneNumber = req.body.resPhoneNumber;
+        user.mobileNumber = req.body.mobileNumber;
+        var i = 0;
+
+        if (req.body.username == null || req.body.username == '' || req.body.email == null || req.body.email == '' || req.body.password == null || req.body.password == '' ||
+            req.body.name == null || req.body.name == '' || req.body.age == null || req.body.age == '' || req.body.gender == null || req.body.gender == '' ||
+            req.body.bloodGroup == null || req.body.bloodGroup == '' || req.body.weight == null || req.body.weight == '' ||
+            req.body.mobileNumber == null || req.body.mobileNumber == '') {
+            res.json({ success: false, message: 'Ensure all the fields are entered' });
+        } else {
+            user.save(function (err) {
+                if (err) {
+                        //res.json({ success: false, message: err }); // Display any other error
+                        //console.log(err.code);
+                        if(err.code === 11000){
+                            if(err.errmsg[55] === "u")
+                                res.json({success: false, message: "Username already used"});
+                            else if(err.errmsg[55] === "e"){
+                                res.json({success: false, message: "Email already used"});
+                            }else{
+                                res.json({success: false, message: err});
+                            }
+                        }
+                        //console.log(err.errmsg[55]);      
+                }
+                else {
+                    res.json({ success: true, message: "User created" });
+                }
+            });
+
+        }
     });
     return router;
 }

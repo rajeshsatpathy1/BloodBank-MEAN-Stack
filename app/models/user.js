@@ -1,81 +1,29 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
-var titlize = require('mongoose-title-case');
-var validate = require('mongoose-validator');
-
-
-var nameValidator = [
-  validate({
-    validator: 'matches',
-    arguments: /^([a-zA-Z]{3,20})+$/,
-    message: 'Name must be at least 3 characters maximum 30 characters and alphabetical'
-  })  
-];
-
-var emailValidator = [
-  validate({
-      validator: 'matches',
-      arguments: /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/,
-      message: 'Invalid email - must be of the form abc@xyz.pqr'
-  }),
-  validate({
-      validator: 'isLength',
-      arguments: [3, 40],
-      message: 'Email should be between {ARGS[0]} and {ARGS[1]} characters'
-  })
-];
-
-var usernameValidator = [
-  validate({
-      validator: 'isLength',
-      arguments: [3, 25],
-      message: 'Username should be between {ARGS[0]} and {ARGS[1]} characters'
-  }),
-  validate({
-      validator: 'isAlphanumeric',
-      message: 'Username must contain letters and numbers only'
-  })
-];
-
-var passwordValidator = [
-  validate({
-      validator: 'matches',
-      arguments: /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\d])(?=.*?[\W]).{8,35}$/,
-      message: 'Password needs to have at least one lower case, one uppercase, one number, one special character, and must be at least 8 characters but no more than 35.'
-  }),
-  validate({
-      validator: 'isLength',
-      arguments: [8, 35],
-      message: 'Password should be between {ARGS[0]} and {ARGS[1]} characters'
-  })
-];
 
 var UserSchema = new Schema({
-    name: {type: String, required: true, validate: nameValidator},
-    userName: {type: String,lowercase: true,required: true,unique: true, validate: usernameValidator}, //The n in name is capital -- BEWARE!!
-    password: {type: String,required: true, validate: passwordValidator},
-    email: {type: String,lowercase: true,required: true,unique: true, validate: emailValidator},
-    permission: {type:String, required: true, default: 'user'}
+    username:{type: String, lowercase:true, required:true, unique:true},
+    name:{type: String, required:true},
+    password:{type: String, required:true},
+    email:{type:String, required:true, lowercase:true, unique:true},
+
+    age:{type:Number, required:true, min:1, max:100},
+    gender:{type:String, required:true, possibleValues: ['M','F']},
+    bloodGroup:{type:String, required:true, possibleValues: ['A+','B+','O+','A-','B-','O-','AB+','AB-']},
+    weight:{type:Number, required:true, min:3, max:150},
+    
+    resPhoneNumber:{type:Number},
+    mobileNumber:{type:Number, required:true}
 });
 
-UserSchema.pre('save', function(next) {
-  var user = this;
-  bcrypt.hash(user.password, null, null,function(err, hash){
-      if(err)
-        return next(err);
-      user.password = hash;
-      next();
-  })
+UserSchema.pre('save',function(next){
+    var user = this;
+    bcrypt.hash(user.password,null,null,function(err, hash) {
+        if(err) return next(err);
+        user.password = hash;
+        next();
+    });
 });
-
-UserSchema.plugin(titlize, {
-  paths: [ 'name']
-});
-
-UserSchema.methods.comparePassword = function(password) {
-  return bcrypt.compareSync(password, this.password); // Returns true if password matches, false if doesn't
-};
 
 module.exports = mongoose.model('User',UserSchema);
-

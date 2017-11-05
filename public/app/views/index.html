@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+
+  <meta http-equiv="X-UA-Compatible" content="text/html" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--StyleSheets-->
+  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/style1.css">
+
+  <!--Main angular files-->
+  <script src="assets/js/angular.js"></script>
+  <script src="assets/js/angular-route.js"></script>
+  <script src="assets/js/angular-animate.js"></script>
+
+  <!--Angular config routes-->
+  <script src="app/app.js"></script>
+  <script src="app/routes.js"></script>
+
+  <!--Angular Controllers-->
+  <script src="app/controllers/userCtrl.js"></script>
+
+  <!--Angular services-->
+  <script src="app/services/userServices.js"></script>
+
+
+  <title>Blood Bank Hubli</title>
+
+</head>
+
+<body ng-app="userApp">
+
+  <!-- Fixed navbar -->
+  <div>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Blood Bank, Hubli</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="/" class="hvr-bounce-to-bottom-2 m1-2">Home</a>
+            </li>
+            <li>
+              <a href="/about" class="hvr-bounce-to-bottom-2 m1-2">About Us</a>
+            </li>
+            <li>
+              <a href="/register" class="hvr-bounce-to-bottom-2 m1-2">Register as Donor</a>
+            </li>
+            <li>
+              <a href="/requestblood" class="hvr-bounce-to-bottom-2 m1-2">Request Blood</a>
+            </li>
+            <li>
+              <a href="/bloodtips" class="hvr-bounce-to-bottom-2 m1-2">Blood Tips</a>
+            </li>
+            <li>
+              <a href="/login" class="hvr-bounce-to-bottom-2 m1-2">Login</a>
+            </li>
+          </ul>
+        </div>
+        <!--/.nav-collapse -->
+      </div>
+    </nav>
+  </div>
+  <br>
+  <div ng-view></div>
+
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="assets/js/jquery-3.2.1.min.js"></script>
+  <script src="assets/js/bootstrap.js"></script>
+</body>
+
+</html>

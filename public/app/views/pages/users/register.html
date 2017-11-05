@@ -1,0 +1,180 @@
+<div>
+    <div class="container">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <span class="errspns"> </span>
+                    <h2>Register as a Blood Donor</h2>
+                    <form ng-submit="register.regUser(regData);">
+                        <div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3>Login Information</h3>
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="control-group form-group">
+                                                    <div>
+                                                        <label>Name *</label>
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" aria-describedby="basic-addon1" rel="tooltip" name="donor_name" id="donor_name" value=""
+                                                            ng-model="register.regData.name" title="Please fill your Fullname Maximum 20 characters. ">
+                                                    </div>
+                                                </div>
+                                                <div class="control-group form-group">
+                                                    <div>
+                                                        <label>Email ID *</label>
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <input type="email" class="form-control" rel="tooltip" name="emailid" id="emailid" value="" ng-model="register.regData.email"
+                                                            title="Email can contain only letters, numbers, periods (.), @, hyphens (-) and underscores (_)."> </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="control-group form-group">
+                                                    <div>
+                                                        <label>User name *</label>
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" rel="tooltip" id="cpassword" name="username" value="" ng-model="register.regData.username"
+                                                            title="Please Re-enter your password exactly as entered in previous field.">
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group form-group">
+                                                    <div>
+                                                        <label>Password *</label>
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <input type="password" class="form-control" rel="tooltip" id="password" name="password" value="" ng-model="register.regData.password"
+                                                            title=" Please enter your password. Minimum 8 characters,case sensitive.">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3> Donor Information</h3>
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="control-group form-group">
+                                                    <div>
+                                                        <label>Age *</label>
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" name="age" ng-model="register.regData.age">
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div>
+                                                        <label>Blood Group *</label>
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <select name="blood" id="blood" class="form-control" ng-model="register.regData.bloodGroup">
+                                                            <option value="0" selected>Select your blood group</option>
+                                                            <option value="A+">A+</option>
+                                                            <option value="B+">B+</option>
+                                                            <option value="O+">O+</option>
+                                                            <option value="A-">A-</option>
+                                                            <option value="B-">B-</option>
+                                                            <option value="O-">O-</option>
+                                                            <option value="AB+">AB+</option>
+                                                            <option value="AB-">AB-</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- col-md-6 -->
+                                            <div class="col-md-4">
+                                                <div class="control-group form-group">
+                                                    <div>
+                                                        <label>Gender *</label>
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <span class="radio-inline">
+                                                            <input type="radio" name="gender" id="optionsRadios1" value="M" ng-model="register.regData.gender">
+                                                            <label for="optionsRadios1" class="radio-gender">Male</label>
+                                                        </span>
+                                                        <span class="radio-inline">
+                                                            <input type="radio" name="gender" id="optionsRadios2" value="F" ng-model="register.regData.gender">
+                                                            <label for="optionsRadios2" class="radio-gender">Female</label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group form-group">
+                                                    <div>
+                                                        <label>Weight (Kg) *</label>
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" placeholder="" name="weight" id="weight" value="" rel="tooltip" ng-model="register.regData.weight"
+                                                            title="Please enter your weight"> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mobile-head">
+                                        <h3>Contact Information</h3>
+                                    </div>
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="control-group form-group">
+                                                    <label>Residence Phone</label>
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" rel="tooltip" name="res_phno" id="res_phno" value="" ng-model="register.regData.resPhoneNumber"
+                                                            title="Please enter your Residence Phone Number">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="control-group form-group">
+                                                    <label>Mobile No *</label>
+                                                    <div class="input-group">
+                                                        <input type="Number" class="form-control" name="mob_no" id="mob_no" rel="tooltip" value="" ng-model="register.regData.mobileNumber"
+                                                            title="Please enter your Mobile Number"> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <button type="submit" class="btn btn-danger">Register</button>
+                                <br> </div>
+                        </div>
+                        <!--Changed-->
+                        <div class="jumbotron text-center" ng-show="register.loading">
+                            <span class="glyphicon glyphicon-repeat spinner"></span>
+                            <p>LoAdiNg...</p>
+                        </div>
+
+                        <div class="row show-hide-message" ng-show="register.successMsg">
+                            <div class="alert alert-success"> {{ register.successMsg }} </div>
+                        </div>
+                        <div class="row show-hide-message" ng-show="register.errMsg">
+                            <div class="alert alert-danger">{{ register.errMsg }}</div>
+                        </div>
+                        <!--changed-->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+</div>
