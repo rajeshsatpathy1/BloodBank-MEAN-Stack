@@ -1,0 +1,168 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <span class="errspns"> </span>
+            <h2 class="page-header" style="color: rgb(0, 0, 0);">Request Blood</h2>
+            <form name="reqForm" ng-submit="request.reqBlood(reqData, reqForm.$valid);" novalidate>
+                <div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 style="color: #9F190C;"> Patient Details</h3>
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <!-- Patient Name -->
+                                            <div ng-class="{ 'has-success':(reqForm.patientName.$valid && !reqForm.patientName.$pristine), 'has-error':(!reqForm.patientName.$valid && !reqForm.patientName.$pristine) || (!reqForm.patientName.$valid && reqForm.$submitted) }">
+                                                <label>Patient Name:</label>
+                                                <input type="text" class="form-control" placeholder="Enter patient name" name="patientName" id="patient_name" value="" title="Please enter Patient Name	Maximum 20 characters."
+                                                    placeholder="Enter patient name" ng-pattern="/^[a-zA-Z]*$/" ng-minlength="3"
+                                                    ng-maxlength="30" ng-model="request.reqData.patientName" required>
+                                                <p class="help-block" ng-show="(!reqForm.patientName.$pristine && reqForm.patientName.$error.required) || (reqForm.$submitted && reqForm.patientName.$error.required)">This field is required</p>
+                                                <ul ng-show="(!reqForm.patientName.$pristine && reqForm.patientName.$error.pattern) || (!reqForm.patientName.$pristine && reqForm.patientName.$error.minlength) || (!reqForm.patientName.$pristine && reqForm.patientName.$error.maxlength)"
+                                                    class="help-block">
+                                                    <li>Must not have a space</li>
+                                                    <li>Must not contain any special characters</li>
+                                                    <li>Must not contain any numbers</li>
+                                                    <li>Must be at least 3 characters but no more than 30</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <!-- Blood units -->
+                                            <div ng-class="{ 'has-success':(reqForm.bloodUnit.$valid && !reqForm.bloodUnit.$pristine), 'has-error':(!reqForm.bloodUnit.$valid && !reqForm.bloodUnit.$pristine) || (!reqForm.bloodUnit.$valid && reqForm.$submitted) }">
+                                                <label>Blood units:</label>
+                                                <input type="number" class="form-control" placeholder="Enter blood units required" name="bloodUnit" id="bloodUnit" value=""
+                                                    title="Please enter Patient Name	Maximum 20 characters." placeholder="Enter patient name"
+                                                    ng-pattern="/^0?[1-9]$|^1[0-2]*$/" ng-minlength="1" ng-maxlength="2" ng-model="request.reqData.bloodUnit"
+                                                    required>
+                                                <p class="help-block" ng-show="(!reqForm.bloodUnit.$pristine && reqForm.bloodUnit.$error.required) || (reqForm.$submitted && reqForm.bloodUnit.$error.required)">This field is required</p>
+                                                <ul ng-show="(!reqForm.bloodUnit.$pristine && reqForm.bloodUnit.$error.pattern) || (!reqForm.bloodUnit.$pristine && reqForm.bloodUnit.$error.minlength) || (!reqForm.bloodUnit.$pristine && reqForm.bloodUnit.$error.maxlength)"
+                                                    class="help-block">
+                                                    <li>Must request at least 1 unit and maximum upto 12 units</li>
+                                                    <li>Must not contain any special characters</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <!-- Patient Blood Group -->
+                                            <div ng-class="{ 'has-success':(reqForm.bloodGroup.$valid && !reqForm.bloodGroup.$pristine), 'has-error':(!reqForm.bloodGroup.$valid && !reqForm.bloodGroup.$pristine) || (!reqForm.bloodGroup.$valid && reqForm.$submitted) }">
+                                                <label>Blood Group:</label>
+                                                <select name="bloodGroup" id="blood" aria-placeholder="Select your blood group" class="form-control" ng-model="request.reqData.bloodGroup"
+                                                    required>
+                                                    <option value="A+">A+</option>
+                                                    <option value="B+">B+</option>
+                                                    <option value="O+">O+</option>
+                                                    <option value="A-">A-</option>
+                                                    <option value="B-">B-</option>
+                                                    <option value="O-">O-</option>
+                                                    <option value="AB+">AB+</option>
+                                                    <option value="AB-">AB-</option>
+                                                </select>
+                                                <p class="help-block" ng-show="(!reqForm.bloodGroup.$pristine && reqForm.bloodGroup.$error.required) || (reqForm.$submitted && reqForm.bloodGroup.$error.required)">This field is required</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 style="color: #9F190C;"> Contact Details</h3>
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="control-group form-group">
+                                            <!-- Contact Name -->
+                                            <div ng-class="{ 'has-success':(reqForm.contactName.$valid && !reqForm.contactName.$pristine), 'has-error':(!reqForm.contactName.$valid && !reqForm.contactName.$pristine) || (!reqForm.contactName.$valid && reqForm.$submitted) }">
+                                                <label>Contact Name:</label>
+                                                <input type="text" class="form-control" placeholder="Enter contact name" name="contactName" id="patient_name" ng-pattern="/^[a-zA-Z]*$/"
+                                                    ng-minlength="3" ng-maxlength="30" ng-model="request.reqData.contactName"
+                                                    required>
+                                                <p class="help-block" ng-show="(!reqForm.contactName.$pristine && reqForm.contactName.$error.required) || (reqForm.$submitted && reqForm.contactName.$error.required)">This field is required</p>
+                                                <ul ng-show="(!reqForm.contactName.$pristine && reqForm.contactName.$error.pattern) || (!reqForm.contactName.$pristine && reqForm.contactName.$error.minlength) || (!reqForm.contactName.$pristine && reqForm.contactName.$error.maxlength)"
+                                                    class="help-block">
+                                                    <li>Must not have a space</li>
+                                                    <li>Must not contain any special characters</li>
+                                                    <li>Must not contain any numbers</li>
+                                                    <li>Must be at least 3 characters but no more than 30</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <!-- E-mail -->
+                                            <div ng-class="{ 'has-success':(reqForm.contactEmail.$valid && !reqForm.contactEmail.$pristine), 'has-error':(!reqForm.contactEmail.$valid && !reqForm.contactEmail.$pristine) || (!reqForm.contactEmail.$valid && reqForm.$submitted) }">
+                                                <label>Contact E-mail:</label>
+                                                <input class="form-control" type="text" name="contactEmail" placeholder="Enter contact email" ng-model="request.reqData.contactEmail"
+                                                    ng-pattern="/^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/" ng-minlength="5"
+                                                    ng-maxlength="25" required>
+                                                <p class="help-block" ng-show="(!reqForm.contactEmail.$pristine && reqForm.contactEmail.$error.required) || (reqForm.$submitted && reqForm.contactEmail.$error.required)">This field is required</p>
+                                                <ul ng-show="(!reqForm.contactEmail.$pristine && reqForm.contactEmail.$error.pattern) || (!reqForm.contactEmail.$pristine && reqForm.contactEmail.$error.minlength) || (!reqForm.contactEmail.$pristine && reqForm.contactEmail.$error.maxlength)"
+                                                    class="help-block">
+                                                    <li>Must contain @</li>
+                                                    <li>Must not contain any special characters</li>
+                                                    <li>Must be at least 3 characters but no more than 25</li>
+                                                    <li>Must be of the form abc@xyz.com</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="control-group form-group">
+                                            <!-- Contact Mobile Number -->
+                                            <div ng-class="{ 'has-success':(reqForm.contactNumber.$valid && !reqForm.contactNumber.$pristine), 'has-error':(!reqForm.contactNumber.$valid && !reqForm.contactNumber.$pristine) || (!reqForm.contactNumber.$valid && reqForm.$submitted) }">
+                                                <label>Contact Number:</label>
+                                                <input class="form-control" type="text" name="contactNumber" ng-model="request.reqData.contactNumber" ng-pattern="/^((\+91[\-\s]?)|[0])?([7-9])(\d{9})$/"
+                                                    placeholder="Enter contact number" required>
+                                                <p class="help-block" ng-show="(!reqForm.contactNumber.$pristine && reqForm.contactNumber.$error.required) || (reqForm.$submitted && reqForm.contactNumber.$error.required)">This field is required</p>
+                                                <ul ng-show="(!reqForm.contactNumber.$pristine && reqForm.contactNumber.$error.pattern) || (!reqForm.contactNumber.$pristine && reqForm.contactNumber.$error.minlength) || (!reqForm.contactNumber.$pristine && reqForm.contactNumber.$error.maxlength)"
+                                                    class="help-block">
+                                                    <li>Must not contain any special characters</li>
+                                                    <li>Must contain only numbers</li>
+                                                    <li>Must be in any of these forms +91-9XXXXXXXXX, +91 8XXXXXXXXX, 07XXXXXXXXX,
+                                                        7XXXXXXXXX
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="control-group form-group">
+                    <div class="controls">
+                        <button type="submit" class="btn btn-danger">Submit Request</button>
+                        <br> </div>
+                </div>
+
+                <div class="jumbotron text-center" ng-show="request.loading">
+                    <!--big box for calling extra attention to some special content LOADING in this case-->
+                    <span class="glyphicon glyphicon-repeat fast-right-spinner"></span>
+                    <p>Loading...</p>
+                </div>
+
+                <br>
+
+                <div class="row show-hide-message" ng-show="request.successMsg">
+                    <div class="alert alert-success">{{ request.successMsg }}</div>
+                </div>
+
+                <br>
+
+                <div class="row show-hide-message" ng-show="request.errorMsg">
+                    <div class="alert alert-danger">{{ request.errorMsg }}</div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
