@@ -2,73 +2,131 @@
 <html lang="en">
 
 <head>
-  <base href="/">
-  <meta charset="utf-8">
+    <base href="/">
+    <meta charset="utf-8">
 
-  <meta http-equiv="X-UA-Compatible" content="text/html" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <meta http-equiv="X-UA-Compatible" content="text/html" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+    <!-- Page icon -->
+    <link rel="icon" type="image/png" href="images/myicon.png">
 
-  <script src="assets/js/angular.js"></script>
-  <script src="assets/js/angular-route.js"></script>
-  <script src="app/app.js"></script>
-  <script src="app/routes.js"></script>
-  <script src="app/controllers/userCtrl.js"></script>
+    <!-- Cascade style sheets -->
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/spinner.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/cards.css">
 
+    <!-- Main angular files -->
+    <script src="assets/js/angular.js"></script>
+    <script src="assets/js/angular-route.js"></script>
+    <script src="assets/js/angular-animate.js"></script>
 
-  <title>Blood Bank Hubli</title>
+    <!-- Angular config/routes -->
+    <script src="app/app.js"></script>
+    <script src="app/routes.js"></script>
+
+    <!-- Angular Controllers -->
+    <script src="app/controllers/userCtrl.js"></script>
+    <script src="app/controllers/reqCtrl.js"></script>
+    <script src="app/controllers/mainCtrl.js"></script>
+    <script src="app/controllers/managementCtrl.js"></script>
+
+    <!-- Angular Services -->
+    <script src="app/services/userServices.js"></script>
+    <script src="app/services/requestServices.js"></script>
+    <script src="app/services/authServices.js"></script>
+
+    <title>Blood Bank,Hubli</title>
 
 </head>
 
-<body ng-app="userApp">
+<body ng-app="userApp" ng-controller="mainCtrl as main" ng-show="main.loadme" ng-cloak>
 
-  <!-- Fixed navbar -->
-  <div>
-    <nav class="navbar navbar-inverse">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">Blood Bank, Hubli</a>
+    <!-- Fixed navbar -->
+    <nav class="w3-card-4 navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Blood Bank, Hubli</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/" class="hvr-bounce-to-bottom-2 m1-2">Home</a>
+                    </li>
+                    <li>
+                        <a href="/about" class="hvr-bounce-to-bottom-2 m1-2">About Us</a>
+                    </li>
+                    <li>
+                        <a href="/register" ng-show="!main.isLoggedIn" class="hvr-bounce-to-bottom-2 m1-2">Register as Donor</a>
+                    </li>
+                    <li>
+                        <a href="/requestblood" class="hvr-bounce-to-bottom-2 m1-2">Request Blood</a>
+                    </li>
+                    <li>
+                      <a href="/management" ng-show="main.isLoggedIn && main.authorized" class="hvr-bounce-to-bottom-2 m1-2">Management</a>
+                  </li>
+                    <li>
+                        <a href="/bloodtips" class="hvr-bounce-to-bottom-2 m1-2">Blood Tips</a>
+                    </li>
+                    <li>
+                        <a href="/login" ng-show="!main.isLoggedIn" class="hvr-bounce-to-bottom-2 m1-2">Login</a>
+                    </li>
+                    <li>
+                        <a href="/profile" ng-show="main.isLoggedIn" class="hvr-bounce-to-bottom-2 m1-2">Hello {{ main.username }}</a>
+                    </li>
+                    <li>
+                        <a href="#" class="hvr-bounce-to-bottom-2 m1-2" ng-show="main.isLoggedIn" ng-click="main.logout();">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li>
-              <a href="/" class="hvr-bounce-to-bottom-2 m1-2">Home</a>
-            </li>
-            <li>
-              <a href="/about" class="hvr-bounce-to-bottom-2 m1-2">About Us</a>
-            </li>
-            <li>
-              <a href="/register" class="hvr-bounce-to-bottom-2 m1-2">Register as Donor</a>
-            </li>
-            <li>
-              <a href="/requestblood" class="hvr-bounce-to-bottom-2 m1-2">Request Blood</a>
-            </li>
-            <li>
-              <a href="/bloodtips" class="hvr-bounce-to-bottom-2 m1-2">Blood Tips</a>
-            </li>
-          </ul>
-        </div>
-        <!--/.nav-collapse -->
-      </div>
     </nav>
-  </div>
-  <br>
-  <div ng-view></div>
+    <br>
+    <br>
+    <br>
 
 
-  <!-- Bootstrap core JavaScript
+    <div ng-view></div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" ng-hide="main.hideButton" ng-click="main.endSession();" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{main.modalHeader}}</h4>
+                </div>
+                <div class="modal-body container">
+                    <p>{{main.modalBody}}</p>
+                    <div ng-show="main.hideButton" class="spinner-type-8"></div>
+                </div>
+                <div class="modal-footer" ng-hide="main.hideButton">
+                    <button type="button" ng-hide="main.hideButton" ng-click="main.renewSession();" class="btn btn-primary" data-dismiss="modal">Yes</button>
+                    <button type="button" ng-hide="main.hideButton" ng-click="main.endSession();" class="btn btn-danger" data-dismiss="modal">No</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript
     ================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
-  <script src="assets/js/jquery-3.2.1.min.js"></script>
-  <script src="assets/js/bootstrap.js"></script>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery-3.2.1.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+
+
 </body>
 
 </html>

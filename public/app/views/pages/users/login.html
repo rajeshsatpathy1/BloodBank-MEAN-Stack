@@ -19,8 +19,9 @@
                                                         <label>User name:</label>
                                                         <input type="text" class="form-control" id="loginUsername" name="loginUsername" value="" ng-model="main.loginData.username"
                                                             ng-pattern="/^(?!.*?[\W])(?=.*?[a-zA-Z]|=.*?[A-Z]).{3,30}$/" ng-minlength="3"
-                                                            ng-maxlength="30" placeholder="Enter your username" required>
-                                                            <p class="help-block" ng-show="(!loginForm.loginUsername.$pristine && loginForm.loginUsername.$error.required) || (loginForm.$submitted && loginForm.loginUsername.$error.required)">This field is required</p>
+                                                            ng-maxlength="30" placeholder="Enter your username" ng-disabled="main.disabled"
+                                                            required>
+                                                        <p class="help-block" ng-show="(!loginForm.loginUsername.$pristine && loginForm.loginUsername.$error.required) || (loginForm.$submitted && loginForm.loginUsername.$error.required)">This field is required</p>
                                                         <ul ng-show="(!loginForm.loginUsername.$pristine && loginForm.loginUsername.$error.pattern) || (!loginForm.loginUsername.$pristine && loginForm.loginUsername.$error.minlength) || (!loginForm.loginUsername.$pristine && loginForm.loginUsername.$error.maxlength)"
                                                             class="help-block">
                                                             <li>Must not contain any special characters</li>
@@ -33,15 +34,10 @@
                                                     <div ng-class="{ 'has-success':(loginForm.password.$valid && !loginForm.password.$pristine), 'has-error':(!loginForm.password.$valid && !loginForm.password.$pristine) || (!loginForm.password.$valid && loginForm.$submitted) }">
                                                         <label>Password:</label>
                                                         <input class="form-control" type="password" name="password" placeholder="Enter your password" ng-model="main.loginData.password"
-                                                            ng-pattern="/^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\d])(?=.*?[\W]).{8,35}$/"
-                                                            ng-minlength="8" ng-maxlength="30" required>
+                                                            ng-minlength="8" ng-maxlength="30" ng-disabled="main.disabled" required>
                                                         <p class="help-block" ng-show="(!loginForm.password.$pristine && loginForm.password.$error.required) || (loginForm.$submitted && loginForm.password.$error.required)">This field is required</p>
-                                                        <ul ng-show="(!loginForm.password.$pristine && loginForm.password.$error.pattern) || (!loginForm.password.$pristine && loginForm.password.$error.minlength) || (!loginForm.password.$pristine && loginForm.password.$error.maxlength)"
+                                                        <ul ng-show="(!loginForm.password.$pristine && loginForm.password.$error.minlength) || (!loginForm.password.$pristine && loginForm.password.$error.maxlength)"
                                                             class="help-block">
-                                                            <li>Must have at least one lower case</li>
-                                                            <li>Must have at least one uppercase</li>
-                                                            <li>Must have at leastone number</li>
-                                                            <li>Must have at least one special character</li>
                                                             <li>Must be at least 8 characters but no more than 30.</li>
                                                         </ul>
                                                     </div>
@@ -56,18 +52,19 @@
                         <div class="clearfix"></div>
                         <div class="control-group">
                             <div class="controls">
-                                <button onclick="clear-form" type="submit" class="btn btn-primary">Login</button>
+                                <button ng-disabled="main.disabled" onclick="clear-form" type="submit" class="btn btn-primary">Login</button>
+                            </div>
+                            <div class="container" ng-show="main.loading" style="padding:20%">
+                                <ul class="loading">
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                </ul>
                             </div>
                         </div>
                     </form>
 
                     <br>
-
-                    <div class="jumbotron text-center" ng-show="main.loading">
-                        <!--big box for calling extra attention to some special content LOADING in this case-->
-                        <span class="glyphicon glyphicon-repeat fast-right-spinner"></span>
-                        <p>Loading...</p>
-                    </div>
 
                     <div class="row show-hide-message" ng-show="main.successMsg">
                         <div class="alert alert-success">{{ main.successMsg }}</div>

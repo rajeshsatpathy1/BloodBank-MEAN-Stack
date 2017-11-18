@@ -19,11 +19,14 @@ var UserSchema = new Schema({
     bloodGroup:{type:String, required:true, enum: ['A+','B+','O+','A-','B-','O-','AB+','AB-']},
     weight:{type:Number, required:true, min:30, max:150},
 
-    userType:{type:String, default:'donor'}
+    userType:{type:String, required:true, default:'donor'}
 });
 
 UserSchema.pre('save',function(next){
     var user = this;
+
+    if(!user.isModified('password')) return next();
+
     bcrypt.hash(user.password,null,null,function(err, hash) {
         if(err) return next(err);
         user.password = hash;
